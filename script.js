@@ -5,11 +5,11 @@
 // o ID é "dQw4w9WgXcQ"
 // ================================================
 const VIDEOS = [
-  { id: 'ID_DO_VIDEO_1', title: 'Projeto 1' },
-  { id: 'ID_DO_VIDEO_2', title: 'Projeto 2' },
-  { id: 'ID_DO_VIDEO_3', title: 'Projeto 3' },
-  { id: 'ID_DO_VIDEO_4', title: 'Projeto 4' },
-  { id: 'ID_DO_VIDEO_5', title: 'Projeto 5' },
+  { id: 'Bhw1Dc1b_Fc', title: 'Shomimi & Minineko React To Memes That Are PURE Good Vibes!'},
+  { id: '9Sn-q2G_7es', title: 'MinikoMew reacts to the CUTEST animal memes on the internet!'},
+  { id: 'i06h7sbDPrY', title: 'Aquwa Catches Fraiki Lying About Her IRL Photos... (EXPOSED)'},
+  { id: 'oWzdklea6h8', title: 'AQUWA AND YUY LOSE IT OVER CHATS UNHINGED MEMES'},
+  { id: 'tvvu8zHgsic', title: 'Smol Filian Being Chaotic for 6 minutes'},
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
