@@ -1,1 +1,58 @@
+// ================================================
+// CARROSSEL DE VÍDEOS
+// Controla qual vídeo aparece, os botões de seta
+// e os indicadores (bolinhas).
+// ================================================
 
+document.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.carousel__track');
+  const items = Array.from(track.querySelectorAll('.carousel__item'));
+  const prevBtn = document.querySelector('.carousel__arrow--prev');
+  const nextBtn = document.querySelector('.carousel__arrow--next');
+  const dotsContainer = document.querySelector('.carousel__dots');
+
+  let currentIndex = 0;
+
+  // Cria uma bolinha (dot) para cada vídeo
+  items.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.classList.add('carousel__dot');
+    dot.setAttribute('aria-label', `Ir para o vídeo ${index + 1}`);
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = Array.from(dotsContainer.querySelectorAll('.carousel__dot'));
+
+  function updateCarousel() {
+    items.forEach((item, index) => {
+      item.classList.toggle('is-active', index === currentIndex);
+    });
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === currentIndex);
+    });
+  }
+
+  function goToSlide(index) {
+    currentIndex = index;
+    updateCarousel();
+  }
+
+  function nextSlide() {
+    // Loop infinito: ao chegar no último, volta pro primeiro
+    currentIndex = (currentIndex + 1) % items.length;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    updateCarousel();
+  }
+
+  nextBtn.addEventListener('click', nextSlide);
+  prevBtn.addEventListener('click', prevSlide);
+
+  // Estado inicial
+  updateCarousel();
+});
