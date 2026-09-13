@@ -13,7 +13,7 @@ const VIDEOS = [
 ];
 
 // Cole aqui a chave da YouTube Data API v3 (veja o passo a passo que te mandei)
-const YOUTUBE_API_KEY = 'COLE_SUA_CHAVE_AQUI';
+const YOUTUBE_API_KEY = 'AIzaSyAIEhRL-o8KAvh9OxpTPbFvEbE8sHYICJ8';
 
 // Guarda o número de views de cada vídeo depois de buscar na API
 const viewCounts = {};
