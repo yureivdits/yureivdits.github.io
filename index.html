@@ -3,168 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfólio - Editor de Vídeo</title>
+  <title>yūrei — Video Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ============================================ -->
-  <!-- 1. HEADER / PERFIL                            -->
-  <!-- ============================================ -->
-  <header class="profile">
-    <img
-      class="profile__photo"
-      src="images/foto-perfil.jpg"
-      alt="Foto de perfil"
-    >
+  <div class="page">
 
-    <h1 class="profile__name">Seu Nome Aqui</h1>
+    <!-- ============================================ -->
+    <!-- 1. HEADER / PERFIL                            -->
+    <!-- ============================================ -->
+    <header class="panel profile">
+      <div class="profile__bg" style="background-image:url('images/banner_a.png');"></div>
+      <div class="profile__overlay"></div>
 
-    <p class="profile__bio">
-      Editor de vídeo especializado em cortes dinâmicos, motion graphics
-      e conteúdo para redes sociais. Substitua este texto pela sua
-      apresentação.
-    </p>
-
-    <nav class="profile__socials">
-      <a href="https://youtube.com/SEU_CANAL" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://x.com/SEU_USUARIO" target="_blank" rel="noopener">X</a>
-      <a href="https://ytjobs.co/SEU_PERFIL" target="_blank" rel="noopener">YTJobs</a>
-    </nav>
-  </header>
-
-
-  <!-- ============================================ -->
-  <!-- 2. PORTFÓLIO / VÍDEOS (carrossel)              -->
-  <!-- ============================================ -->
-  <section class="portfolio" id="portfolio">
-    <h2 class="section-title">Portfólio</h2>
-
-    <div class="carousel">
-
-      <button class="carousel__arrow carousel__arrow--prev" aria-label="Vídeo anterior">
-        &#10094;
-      </button>
-
-      <div class="carousel__track">
-
-        <!-- ITEM 1 -->
-        <div class="carousel__item">
-          <div class="carousel__video">
-            <!-- Substitua pelo iframe de embed do Vimeo/YouTube -->
-            <iframe
-              src="https://player.vimeo.com/video/ID_DO_VIDEO_1"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-          <p class="carousel__caption">Título do projeto 1</p>
+      <div class="profile__content">
+        <div class="profile__rule-row">
+          <span class="rule"></span>
+          <img class="profile__photo" src="images/foto-perfil.jpg" alt="Foto de perfil">
+          <span class="rule"></span>
         </div>
 
-        <!-- ITEM 2 -->
-        <div class="carousel__item">
-          <div class="carousel__video">
-            <iframe
-              src="https://player.vimeo.com/video/ID_DO_VIDEO_2"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-          <p class="carousel__caption">Título do projeto 2</p>
-        </div>
+        <h1 class="profile__name">yūrei</h1>
 
-        <!-- ITEM 3 -->
-        <div class="carousel__item">
-          <div class="carousel__video">
-            <iframe
-              src="https://player.vimeo.com/video/ID_DO_VIDEO_3"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-          <p class="carousel__caption">Título do projeto 3</p>
-        </div>
+        <p class="profile__bio">
+          Video editor specializing in VTuber content.<br>
+          I turn your streams into something special.
+        </p>
 
-        <!-- ITEM 4 -->
-        <div class="carousel__item">
-          <div class="carousel__video">
-            <iframe
-              src="https://player.vimeo.com/video/ID_DO_VIDEO_4"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-          <p class="carousel__caption">Título do projeto 4</p>
-        </div>
+        <nav class="profile__socials">
+          <a class="social-btn" href="https://youtube.com/SEU_CANAL" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+          </a>
+          <a class="social-btn" href="https://x.com/SEU_USUARIO" target="_blank" rel="noopener" aria-label="X">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-6.7L4.5 22H1.3l8.2-9.3L1 2h7l4.9 6.2L18.9 2Zm-1.2 18h1.9L7.3 4H5.2l12.5 16Z"/></svg>
+          </a>
+          <a class="social-btn social-btn--label" href="https://ytjobs.co/SEU_PERFIL" target="_blank" rel="noopener" aria-label="YTJobs">
+            YT<br>JOBS
+          </a>
+        </nav>
+      </div>
+    </header>
 
-        <!-- ITEM 5 -->
-        <div class="carousel__item">
-          <div class="carousel__video">
-            <iframe
-              src="https://player.vimeo.com/video/ID_DO_VIDEO_5"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen>
-            </iframe>
-          </div>
-          <p class="carousel__caption">Título do projeto 5</p>
-        </div>
 
+    <!-- ============================================ -->
+    <!-- 2. PORTFÓLIO / VÍDEOS (carrossel)              -->
+    <!-- ============================================ -->
+    <section class="panel works" id="portfolio">
+      <div class="panel__heading">
+        <span class="panel__title">My Works</span>
+        <span class="rule rule--grow"></span>
+        <span class="panel__hint">Select a video</span>
       </div>
 
-      <button class="carousel__arrow carousel__arrow--next" aria-label="Próximo vídeo">
-        &#10095;
-      </button>
+      <div class="carousel">
 
-    </div>
+        <button class="carousel__arrow carousel__arrow--prev" aria-label="Vídeo anterior">&#10094;</button>
 
-    <!-- Indicadores de posição (bolinhas) -->
-    <div class="carousel__dots"></div>
-  </section>
+        <div class="carousel__peek carousel__peek--prev" aria-hidden="true"></div>
+
+        <div class="carousel__main">
+          <div class="carousel__video">
+            <img class="carousel__thumb" src="" alt="">
+            <button class="carousel__play" aria-label="Reproduzir vídeo">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7Z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="carousel__peek carousel__peek--next" aria-hidden="true"></div>
+
+        <button class="carousel__arrow carousel__arrow--next" aria-label="Próximo vídeo">&#10095;</button>
+      </div>
+
+      <div class="carousel__dots"></div>
+    </section>
 
 
-  <!-- ============================================ -->
-  <!-- 3. TABELA DE PREÇOS                            -->
-  <!-- ============================================ -->
-  <section class="pricing" id="precos">
-    <h2 class="section-title">Preços</h2>
+    <!-- ============================================ -->
+    <!-- 3. TABELA DE PREÇOS                            -->
+    <!-- ============================================ -->
+    <section class="panel pricing" id="precos">
+      <div class="panel__heading">
+        <span class="panel__title">Pricing</span>
+        <span class="rule rule--grow"></span>
+      </div>
 
-    <table class="pricing__table">
-      <thead>
-        <tr>
-          <th>Serviço</th>
-          <th>Descrição</th>
-          <th>Preço</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Edição de vídeo</td>
-          <td>Corte, ritmo, transições e cor básica</td>
-          <td>$XX</td>
-        </tr>
-        <tr>
-          <td>Short / Reels</td>
-          <td>Vídeo curto formatado para redes sociais</td>
-          <td>$XX</td>
-        </tr>
-        <tr>
-          <td>Motion Graphics</td>
-          <td>Animações e elementos gráficos</td>
-          <td>$XX</td>
-        </tr>
-        <tr>
-          <td>Pacote Mensal</td>
-          <td>Descrição do pacote recorrente</td>
-          <td>$XX</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+      <div class="pricing__table" role="table">
+        <div class="pricing__row pricing__row--head" role="row">
+          <span role="columnheader">Service</span>
+          <span role="columnheader">Includes</span>
+          <span role="columnheader">Price</span>
+          <span role="columnheader">Notes</span>
+        </div>
+
+        <div class="pricing__row" role="row">
+          <span class="pricing__service" role="cell">
+            <span class="pricing__icon">&#127916;</span> Video Editing
+          </span>
+          <span class="pricing__includes" role="cell">
+            &bull; Full video editing<br>
+            &bull; Transitions &amp; effects<br>
+            &bull; Up to 10 minutes
+          </span>
+          <span class="pricing__price" role="cell">$XX</span>
+          <span class="pricing__notes" role="cell">Longer videos may require additional fee.</span>
+        </div>
+
+        <div class="pricing__row" role="row">
+          <span class="pricing__service" role="cell">
+            <span class="pricing__icon">&#9654;</span> Shorts / Reels
+          </span>
+          <span class="pricing__includes" role="cell">
+            &bull; Vertical format (9:16)<br>
+            &bull; Subtitles (optional)<br>
+            &bull; Up to 60 seconds
+          </span>
+          <span class="pricing__price" role="cell">$XX</span>
+          <span class="pricing__notes" role="cell">Perfect for TikTok, YouTube Shorts, etc.</span>
+        </div>
+
+        <div class="pricing__row" role="row">
+          <span class="pricing__service" role="cell">
+            <span class="pricing__icon">&#10022;</span> Custom Project
+          </span>
+          <span class="pricing__includes" role="cell">
+            &bull; Personalized editing<br>
+            &bull; Special effects<br>
+            &bull; Custom requests
+          </span>
+          <span class="pricing__price" role="cell">$XX</span>
+          <span class="pricing__notes" role="cell">Contact me for a detailed quote.</span>
+        </div>
+      </div>
+
+      <p class="pricing__footer">
+        <span class="rule"></span> Let's bring your ideas to life. <span class="rule"></span>
+      </p>
+    </section>
+
+  </div>
 
   <script src="script.js"></script>
 </body>
