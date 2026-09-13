@@ -12,6 +12,8 @@
   --max-width: 1080px;
 }
 
+const YOUTUBE_API_KEY = 'AIzaSyAIEhRL-o8KAvh9OxpTPbFvEbE8sHYICJ8';
+
 * {
   box-sizing: border-box;
 }
