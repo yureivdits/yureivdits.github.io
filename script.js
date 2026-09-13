@@ -12,7 +12,40 @@ const VIDEOS = [
   { id: 'tvvu8zHgsic', title: 'Smol Filian Being Chaotic for 6 minutes'},
 ];
 
-const YOUTUBE_API_KEY = 'AIzaSyAIEhRL-o8KAvh9OxpTPbFvEbE8sHYICJ8';
+// Cole aqui a chave da YouTube Data API v3 (veja o passo a passo que te mandei)
+const YOUTUBE_API_KEY = 'COLE_SUA_CHAVE_AQUI';
+
+// Guarda o número de views de cada vídeo depois de buscar na API
+const viewCounts = {};
+
+// Formata número grande em algo tipo "1.2K" ou "3.4M"
+function formatViews(n) {
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace('.0', '') + 'M views';
+  if (n >= 1_000) return (n / 1_000).toFixed(1).replace('.0', '') + 'K views';
+  return n + ' views';
+}
+
+// Busca as views de todos os vídeos numa única chamada à API
+async function fetchViewCounts() {
+  const ids = VIDEOS.map(v => v.id).join(',');
+  const url = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${YOUTUBE_API_KEY}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!data.items) {
+      console.warn('Não foi possível buscar as visualizações. Confira a chave da API.', data);
+      return;
+    }
+
+    data.items.forEach(item => {
+      viewCounts[item.id] = parseInt(item.statistics.viewCount, 10);
+    });
+  } catch (err) {
+    console.warn('Erro ao buscar visualizações do YouTube:', err);
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const videoBox = document.querySelector('.carousel__video');
@@ -23,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const peekPrev = document.querySelector('.carousel__peek--prev');
   const peekNext = document.querySelector('.carousel__peek--next');
   const dotsContainer = document.querySelector('.carousel__dots');
+  const viewsLabel = document.querySelector('.carousel__views');
 
   let currentIndex = 0;
 
@@ -61,6 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
     dots.forEach((dot, index) => {
       dot.classList.toggle('is-active', index === currentIndex);
     });
+
+    // Mostra as views se já tiverem sido carregadas
+    const views = viewCounts[current.id];
+    viewsLabel.textContent = views !== undefined ? formatViews(views) : '';
 
     if (animate) {
       // Reinicia a animação de "giro" a cada troca de vídeo
@@ -104,4 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   peekNext.addEventListener('click', nextSlide);
 
   render(false); // primeira renderização, sem animação
+
+  // Busca as views em segundo plano e atualiza o texto quando chegar
+  fetchViewCounts().then(() => render(false));
 });
