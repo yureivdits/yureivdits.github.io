@@ -1,1 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio - Editor de Vídeo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <!-- ============================================ -->
+  <!-- 1. HEADER / PERFIL                            -->
+  <!-- ============================================ -->
+  <header class="profile">
+    <img
+      class="profile__photo"
+      src="images/foto-perfil.jpg"
+      alt="Foto de perfil"
+    >
+
+    <h1 class="profile__name">Seu Nome Aqui</h1>
+
+    <p class="profile__bio">
+      Editor de vídeo especializado em cortes dinâmicos, motion graphics
+      e conteúdo para redes sociais. Substitua este texto pela sua
+      apresentação.
+    </p>
+
+    <nav class="profile__socials">
+      <a href="https://youtube.com/SEU_CANAL" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://x.com/SEU_USUARIO" target="_blank" rel="noopener">X</a>
+      <a href="https://ytjobs.co/SEU_PERFIL" target="_blank" rel="noopener">YTJobs</a>
+    </nav>
+  </header>
+
+
+  <!-- ============================================ -->
+  <!-- 2. PORTFÓLIO / VÍDEOS (carrossel)              -->
+  <!-- ============================================ -->
+  <section class="portfolio" id="portfolio">
+    <h2 class="section-title">Portfólio</h2>
+
+    <div class="carousel">
+
+      <button class="carousel__arrow carousel__arrow--prev" aria-label="Vídeo anterior">
+        &#10094;
+      </button>
+
+      <div class="carousel__track">
+
+        <!-- ITEM 1 -->
+        <div class="carousel__item">
+          <div class="carousel__video">
+            <!-- Substitua pelo iframe de embed do Vimeo/YouTube -->
+            <iframe
+              src="https://player.vimeo.com/video/ID_DO_VIDEO_1"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <p class="carousel__caption">Título do projeto 1</p>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="carousel__item">
+          <div class="carousel__video">
+            <iframe
+              src="https://player.vimeo.com/video/ID_DO_VIDEO_2"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <p class="carousel__caption">Título do projeto 2</p>
+        </div>
+
+        <!-- ITEM 3 -->
+        <div class="carousel__item">
+          <div class="carousel__video">
+            <iframe
+              src="https://player.vimeo.com/video/ID_DO_VIDEO_3"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <p class="carousel__caption">Título do projeto 3</p>
+        </div>
+
+        <!-- ITEM 4 -->
+        <div class="carousel__item">
+          <div class="carousel__video">
+            <iframe
+              src="https://player.vimeo.com/video/ID_DO_VIDEO_4"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <p class="carousel__caption">Título do projeto 4</p>
+        </div>
+
+        <!-- ITEM 5 -->
+        <div class="carousel__item">
+          <div class="carousel__video">
+            <iframe
+              src="https://player.vimeo.com/video/ID_DO_VIDEO_5"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <p class="carousel__caption">Título do projeto 5</p>
+        </div>
+
+      </div>
+
+      <button class="carousel__arrow carousel__arrow--next" aria-label="Próximo vídeo">
+        &#10095;
+      </button>
+
+    </div>
+
+    <!-- Indicadores de posição (bolinhas) -->
+    <div class="carousel__dots"></div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- 3. TABELA DE PREÇOS                            -->
+  <!-- ============================================ -->
+  <section class="pricing" id="precos">
+    <h2 class="section-title">Preços</h2>
+
+    <table class="pricing__table">
+      <thead>
+        <tr>
+          <th>Serviço</th>
+          <th>Descrição</th>
+          <th>Preço</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Edição de vídeo</td>
+          <td>Corte, ritmo, transições e cor básica</td>
+          <td>$XX</td>
+        </tr>
+        <tr>
+          <td>Short / Reels</td>
+          <td>Vídeo curto formatado para redes sociais</td>
+          <td>$XX</td>
+        </tr>
+        <tr>
+          <td>Motion Graphics</td>
+          <td>Animações e elementos gráficos</td>
+          <td>$XX</td>
+        </tr>
+        <tr>
+          <td>Pacote Mensal</td>
+          <td>Descrição do pacote recorrente</td>
+          <td>$XX</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
