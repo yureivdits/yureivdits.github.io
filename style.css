@@ -336,6 +336,16 @@ body {
   margin-top: 24px;
 }
 
+.carousel__views {
+  text-align: center;
+  margin: 12px 0 0;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
 .carousel__dot {
   width: 7px;
   height: 7px;
@@ -427,16 +437,6 @@ body {
   font-family: var(--sans);
   font-size: 0.7rem;
   letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.carousel__views {
-  text-align: center;
-  margin: 12px 0 0;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--ink-faint);
 }
