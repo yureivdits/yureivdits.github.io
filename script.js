@@ -12,6 +12,8 @@ const VIDEOS = [
   { id: 'tvvu8zHgsic', title: 'Smol Filian Being Chaotic for 6 minutes'},
 ];
 
+const YOUTUBE_API_KEY = 'AIzaSyAIEhRL-o8KAvh9OxpTPbFvEbE8sHYICJ8';
+
 document.addEventListener('DOMContentLoaded', () => {
   const videoBox = document.querySelector('.carousel__video');
   const thumbImg = document.querySelector('.carousel__thumb');
