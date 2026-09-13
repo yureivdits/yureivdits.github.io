@@ -1,195 +1,405 @@
 /* ================================================
-   ESTE ARQUIVO CONTÉM APENAS ESTRUTURA/LAYOUT.
-   Cores, fontes e identidade visual virão depois.
+   TOKENS
    ================================================ */
+:root {
+  --bg: #050505;
+  --panel-border: rgba(255, 255, 255, 0.18);
+  --ink: #ececec;
+  --ink-dim: #9a9a9a;
+  --ink-faint: #6b6b6b;
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --max-width: 1080px;
+}
 
 * {
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
   padding: 0;
 }
 
-/* ---------- 1. PERFIL ---------- */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.5;
+}
 
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Painel genérico usado nas 3 seções */
+.panel {
+  border: 1px solid var(--panel-border);
+  padding: 40px clamp(20px, 5vw, 56px);
+  position: relative;
+}
+
+.rule {
+  display: inline-block;
+  height: 1px;
+  width: 48px;
+  background: var(--panel-border);
+}
+
+.rule--grow {
+  flex: 1;
+  width: auto;
+}
+
+/* ================================================
+   1. HEADER / PERFIL
+   ================================================ */
 .profile {
+  text-align: center;
+  overflow: hidden;
+}
+
+.profile__bg {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  filter: grayscale(1) contrast(1.05);
+  opacity: 0.22;
+}
+
+.profile__overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(5,5,5,0.75) 0%, rgba(5,5,5,0.92) 60%, var(--bg) 100%);
+}
+
+.profile__content {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  padding: 40px 20px;
-  gap: 12px;
+  gap: 14px;
+}
+
+.profile__rule-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.profile__rule-row .rule {
+  flex: 1;
+  width: auto;
 }
 
 .profile__photo {
-  width: 120px;
-  height: 120px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid var(--panel-border);
+  background: #111;
+  flex-shrink: 0;
 }
 
 .profile__name {
-  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  letter-spacing: 0.04em;
+  margin: 4px 0 0;
 }
 
 .profile__bio {
-  max-width: 500px;
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 1.05rem;
+  max-width: 460px;
   margin: 0;
 }
 
 .profile__socials {
   display: flex;
-  gap: 16px;
-  margin-top: 8px;
+  gap: 14px;
+  margin-top: 10px;
 }
 
-/* ---------- SEÇÕES (título comum) ---------- */
+.social-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--panel-border);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
 
-.section-title {
+.social-btn:hover {
+  border-color: var(--ink);
+}
+
+.social-btn--label {
+  font-family: var(--sans);
+  font-size: 9px;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
   text-align: center;
-  margin: 0 0 24px 0;
 }
 
-/* ---------- 2. PORTFÓLIO / CARROSSEL ---------- */
-
-.portfolio {
-  padding: 40px 20px;
+/* ================================================
+   PANEL HEADINGS (My Works / Pricing)
+   ================================================ */
+.panel__heading {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 32px;
 }
 
+.panel__title {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.panel__hint {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* ================================================
+   2. MY WORKS / CARROSSEL
+   ================================================ */
 .carousel {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  max-width: 900px;
-  margin: 0 auto;
+  gap: 12px;
 }
 
-.carousel__track {
-  position: relative;
-  width: 100%;
-  max-width: 640px;
-  overflow: hidden;
-}
-
-.carousel__item {
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.carousel__item.is-active {
+.carousel__arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 14px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease;
+}
+
+.carousel__arrow:hover {
+  border-color: var(--ink);
+}
+
+.carousel__peek {
+  flex: 1;
+  max-width: 90px;
+  aspect-ratio: 9 / 16;
+  background-size: cover;
+  background-position: center;
+  background-color: #111;
+  opacity: 0.35;
+  filter: grayscale(1);
+  display: none;
+}
+
+.carousel__main {
+  width: 100%;
+  max-width: 620px;
 }
 
 .carousel__video {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* proporção 16:9 */
+  aspect-ratio: 16 / 9;
+  background: #111;
+  border: 1px solid var(--panel-border);
+  overflow: hidden;
+}
+
+.carousel__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(0.3);
 }
 
 .carousel__video iframe {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
 }
 
-.carousel__caption {
-  text-align: center;
-  margin: 0;
-}
-
-.carousel__arrow {
-  flex-shrink: 0;
-  cursor: pointer;
+.carousel__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   border: none;
-  background: none;
-  font-size: 24px;
-  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .carousel__dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 10px;
+  margin-top: 24px;
 }
 
 .carousel__dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  border: 1px solid currentColor;
+  border: 1px solid var(--ink-dim);
   background: transparent;
-  cursor: pointer;
   padding: 0;
+  cursor: pointer;
 }
 
 .carousel__dot.is-active {
-  background: currentColor;
+  background: var(--ink);
+  border-color: var(--ink);
 }
 
-/* ---------- 3. TABELA DE PREÇOS ---------- */
-
-.pricing {
-  padding: 40px 20px;
-}
-
-.pricing__table {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  border-collapse: collapse;
-}
-
-.pricing__table th,
-.pricing__table td {
-  border: 1px solid currentColor;
-  padding: 12px;
-  text-align: left;
-}
-
-/* ---------- RESPONSIVO (mobile) ---------- */
-
-@media (max-width: 600px) {
-  .carousel {
-    gap: 8px;
-  }
-
-  .carousel__arrow {
-    font-size: 18px;
-    padding: 4px 6px;
-  }
-
-  .pricing__table,
-  .pricing__table thead,
-  .pricing__table tbody,
-  .pricing__table th,
-  .pricing__table td,
-  .pricing__table tr {
+/* Mostra os "peeks" laterais só em telas largas o suficiente */
+@media (min-width: 800px) {
+  .carousel__peek {
     display: block;
   }
+}
 
-  .pricing__table thead {
+/* ================================================
+   3. PRICING
+   ================================================ */
+.pricing__table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.pricing__row {
+  display: grid;
+  grid-template-columns: 1.2fr 1.6fr 0.7fr 1.4fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--panel-border);
+  align-items: start;
+}
+
+.pricing__row:last-child {
+  border-bottom: none;
+}
+
+.pricing__row--head {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-bottom: 14px;
+}
+
+.pricing__service {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+}
+
+.pricing__icon {
+  font-size: 1.1rem;
+}
+
+.pricing__includes,
+.pricing__notes {
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+}
+
+.pricing__price {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+}
+
+.pricing__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 32px 0 0;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ================================================
+   RESPONSIVO / MOBILE
+   ================================================ */
+@media (max-width: 640px) {
+  .panel {
+    padding: 28px 18px;
+  }
+
+  .panel__heading {
+    flex-wrap: wrap;
+  }
+
+  .panel__hint {
     display: none;
   }
 
-  .pricing__table tr {
-    margin-bottom: 16px;
-    border: 1px solid currentColor;
+  .pricing__row {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 
-  .pricing__table td {
-    border: none;
-    border-bottom: 1px solid currentColor;
+  .pricing__row--head {
+    display: none;
   }
 
-  .pricing__table td:last-child {
-    border-bottom: none;
+  .pricing__price::before {
+    content: "Price: ";
+    color: var(--ink-faint);
+    font-family: var(--sans);
+    font-size: 0.7rem;
   }
 }
