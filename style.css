@@ -1,632 +1,148 @@
-/* ================================================
-   TOKENS
-   ================================================ */
-:root {
-  --paper: #ffffff;      /* papel branco puro, como nas páginas de mangá */
-  --ink: #000000;        /* preto de nanquim puro */
-  --ink-soft: #2b2b2b;
-  --ink-faint: #6e6e6e;
-  --border: 4px solid var(--ink);
-  --border-thin: 1.5px solid var(--ink);
-  --gutter: 10px;          /* respiro entre painéis, como o sulco entre quadrinhos */
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --jp: 'Noto Serif JP', var(--serif);
-  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --max-width: 880px;
+// ================================================
+// CONFIGURAÇÃO DOS VÍDEOS
+// Troque "id" pelo ID do vídeo no YouTube.
+// Ex: em https://www.youtube.com/watch?v=dQw4w9WgXcQ
+// o ID é "dQw4w9WgXcQ"
+// ================================================
+const VIDEOS = [
+  { id: 'Bhw1Dc1b_Fc', title: 'Shomimi & Minineko React To Memes That Are PURE Good Vibes!'},
+  { id: '9Sn-q2G_7es', title: 'MinikoMew reacts to the CUTEST animal memes on the internet!'},
+  { id: 'i06h7sbDPrY', title: 'Aquwa Catches Fraiki Lying About Her IRL Photos... (EXPOSED)'},
+  { id: 'oWzdklea6h8', title: 'AQUWA AND YUY LOSE IT OVER CHATS UNHINGED MEMES'},
+  { id: 'tvvu8zHgsic', title: 'Smol Filian Being Chaotic for 6 minutes'},
+];
+
+// Cole aqui a chave da YouTube Data API v3 (veja o passo a passo que te mandei)
+const YOUTUBE_API_KEY = 'AIzaSyAIEhRL-o8KAvh9OxpTPbFvEbE8sHYICJ8';
+
+// Guarda o número de views de cada vídeo depois de buscar na API
+const viewCounts = {};
+
+// Formata número grande em algo tipo "1.2K" ou "3.4M"
+function formatViews(n) {
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace('.0', '') + 'M views';
+  if (n >= 1_000) return (n / 1_000).toFixed(1).replace('.0', '') + 'K views';
+  return n + ' views';
 }
 
-* {
-  box-sizing: border-box;
-}
+// Busca as views de todos os vídeos numa única chamada à API
+async function fetchViewCounts() {
+  const ids = VIDEOS.map(v => v.id).join(',');
+  const url = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${YOUTUBE_API_KEY}`;
 
-html, body {
-  margin: 0;
-  padding: 0;
-}
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
 
-body {
-  background: #d6d6d6;
-  color: var(--ink);
-  font-family: var(--sans);
-  line-height: 1.5;
-}
+    if (!data.items) {
+      console.warn('Não foi possível buscar as visualizações. Confira a chave da API.', data);
+      return;
+    }
 
-/* textura de papel sutil no fundo geral, fora da moldura */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(var(--ink) 0.6px, transparent 0.6px);
-  background-size: 5px 5px;
-  opacity: 0.05;
-  pointer-events: none;
-}
-
-.page {
-  max-width: var(--max-width);
-  margin: 16px auto;
-  padding: var(--gutter);
-  background: var(--paper);
-  border: 4px solid var(--ink);
-  box-shadow: 0 0 0 1px var(--paper);
-  display: flex;
-  flex-direction: column;
-  gap: var(--gutter);
-}
-
-/* painel genérico com borda grossa de quadrinho */
-.panel {
-  border: var(--border);
-  background: var(--paper);
-  position: relative;
-}
-
-.rule {
-  display: inline-block;
-  height: 1.5px;
-  width: 48px;
-  background: var(--ink);
-}
-
-.rule--grow {
-  flex: 1;
-  width: auto;
-}
-
-/* ================================================
-   NAV
-   ================================================ */
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 22px;
-  border-bottom: var(--border);
-}
-
-.nav__logo {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.4rem;
-  letter-spacing: 0.02em;
-}
-
-.nav__links {
-  display: flex;
-  gap: 28px;
-}
-
-.nav__links a {
-  color: var(--ink);
-  text-decoration: none;
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
-  border-bottom: 1.5px solid transparent;
-  padding-bottom: 2px;
-  transition: border-color 0.2s ease;
-}
-
-.nav__links a:hover {
-  border-color: var(--ink);
-}
-
-/* ================================================
-   HERO
-   ================================================ */
-.hero {
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: var(--gutter);
-  min-height: 280px;
-}
-
-.hero__text {
-  padding: 28px clamp(20px, 4vw, 36px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 12px;
-}
-
-.hero__stamp {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 1.5px solid var(--ink);
-  position: absolute;
-  top: 22px;
-  right: 22px;
-  filter: grayscale(1) contrast(1.15);
-}
-
-.hero__stamp img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.hero__kicker {
-  margin: 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  color: var(--ink-soft);
-}
-
-.hero__title {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(2.6rem, 6vw, 4rem);
-  line-height: 0.9;
-  margin: 0;
-}
-
-.hero__bio {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--ink-soft);
-  max-width: 30ch;
-  margin: 0;
-}
-
-.hero__socials {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.social-btn {
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--ink);
-  color: var(--ink);
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-}
-
-.social-btn:hover {
-  background: var(--ink);
-  color: var(--paper);
-  transform: translateY(-2px);
-}
-
-.social-btn--label {
-  font-size: 8.5px;
-  letter-spacing: 0.03em;
-  text-align: center;
-  line-height: 1.15;
-}
-
-.hero__image {
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e2e2e2;
-}
-
-.hero__speedlines {
-  position: absolute;
-  inset: 0;
-  background: repeating-conic-gradient(
-    from 0deg at 50% 50%,
-    var(--ink) 0deg 0.6deg,
-    transparent 0.6deg 4.2deg
-  );
-  opacity: 0.16;
-  mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 72%);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 72%);
-}
-
-.hero__photo {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.25) brightness(0.95);
-}
-
-.hero__caption {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  border: 1.5px solid var(--ink);
-  background: var(--paper);
-  padding: 10px 8px;
-}
-
-.hero__caption span {
-  writing-mode: vertical-rl;
-  font-family: var(--jp);
-  font-size: 0.95rem;
-  letter-spacing: 0.14em;
-}
-
-/* ================================================
-   SECTION HEADINGS (My Works / Pricing)
-   ================================================ */
-.section__heading {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 18px 6px 14px;
-}
-
-.section__title {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.9rem;
-}
-
-.section__hint {
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--ink-faint);
-  white-space: nowrap;
-}
-
-/* ================================================
-   MY WORKS / CARROSSEL
-   ================================================ */
-.works {
-  padding: 0 6px 8px;
-}
-
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--gutter);
-}
-
-.carousel__arrow {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ink);
-  background: var(--paper);
-  color: var(--ink);
-  cursor: pointer;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.carousel__arrow:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.carousel__peek {
-  flex: 1;
-  max-width: 90px;
-  aspect-ratio: 9 / 16;
-  background-size: cover;
-  background-position: center;
-  background-color: #e2e2e2;
-  opacity: 0.55;
-  display: none;
-  cursor: pointer;
-  border: 1.5px solid var(--ink);
-  transition: opacity 0.2s ease;
-}
-
-.carousel__peek:hover {
-  opacity: 0.85;
-}
-
-.carousel__main {
-  width: 100%;
-  max-width: 520px;
-}
-
-.carousel__video {
-  aspect-ratio: 16 / 9;
-  background: #e2e2e2;
-  overflow: hidden;
-}
-
-@keyframes carousel-spin-in {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
+    data.items.forEach(item => {
+      viewCounts[item.id] = parseInt(item.statistics.viewCount, 10);
+    });
+  } catch (err) {
+    console.warn('Erro ao buscar visualizações do YouTube:', err);
   }
 }
 
-.carousel__video.is-changing {
-  animation: carousel-spin-in 0.35s ease-out;
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const videoBox = document.querySelector('.carousel__video');
+  const thumbImg = document.querySelector('.carousel__thumb');
+  const playBtn = document.querySelector('.carousel__play');
+  const prevArrow = document.querySelector('.carousel__arrow--prev');
+  const nextArrow = document.querySelector('.carousel__arrow--next');
+  const peekPrev = document.querySelector('.carousel__peek--prev');
+  const peekNext = document.querySelector('.carousel__peek--next');
+  const dotsContainer = document.querySelector('.carousel__dots');
+  const viewsLabel = document.querySelector('.carousel__views');
 
-.carousel__thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+  let currentIndex = 0;
 
-.carousel__video iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.carousel__play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ink);
-  background: var(--paper);
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.carousel__play:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.carousel__caption {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin: 8px 2px 0;
-  font-family: var(--serif);
-  font-size: 1rem;
-}
-
-.carousel__views {
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  color: var(--ink-faint);
-}
-
-.carousel__dots {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 14px 0 4px;
-}
-
-.carousel__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  border: 1.5px solid var(--ink-soft);
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.carousel__dot:hover {
-  transform: scale(1.3);
-}
-
-.carousel__dot.is-active {
-  background: var(--ink);
-  border-color: var(--ink);
-}
-
-@media (min-width: 800px) {
-  .carousel__peek {
-    display: block;
-  }
-}
-
-/* ================================================
-   PRICING
-   ================================================ */
-.pricing {
-  padding: 0 6px 8px;
-}
-
-.pricing__layout {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: var(--gutter);
-  align-items: stretch;
-}
-
-.pricing__table {
-  padding: 6px clamp(16px, 4vw, 32px) 18px;
-}
-
-.pricing__row {
-  display: grid;
-  grid-template-columns: 1fr 2fr 0.7fr;
-  gap: 16px;
-  padding: 14px 0;
-  border-bottom: var(--border-thin);
-  align-items: start;
-}
-
-.pricing__row:last-of-type {
-  border-bottom: none;
-}
-
-.pricing__row--head {
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  color: var(--ink-faint);
-  padding-bottom: 12px;
-}
-
-.pricing__service {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 1.15rem;
-}
-
-.pricing__includes {
-  color: var(--ink-soft);
-  font-size: 0.92rem;
-}
-
-.pricing__price {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.4rem;
-}
-
-.pricing__note {
-  font-size: 0.82rem;
-  color: var(--ink-faint);
-  margin: 18px 0 0;
-}
-
-.pricing__art {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    repeating-linear-gradient(45deg, transparent 0 6px, rgba(20,20,20,0.06) 6px 7px),
-    var(--paper);
-  min-height: 120px;
-}
-
-.pricing__art-kanji {
-  font-family: var(--jp);
-  font-weight: 700;
-  font-size: 2.4rem;
-  writing-mode: vertical-rl;
-  letter-spacing: 0.3em;
-  border: 1.5px solid var(--ink);
-  padding: 16px 10px;
-  background: var(--paper);
-}
-
-/* ================================================
-   FOOTER / CONTATO
-   ================================================ */
-.footer {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: var(--gutter);
-  padding: 0 6px 6px;
-}
-
-.footer__art {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 130px;
-  background:
-    repeating-conic-gradient(from 90deg at 50% 50%, var(--ink) 0deg 0.5deg, transparent 0.5deg 3.5deg) ,
-    var(--paper);
-  background-blend-mode: multiply;
-}
-
-.footer__art-kanji {
-  font-family: var(--jp);
-  font-weight: 700;
-  font-size: 2rem;
-  writing-mode: vertical-rl;
-  letter-spacing: 0.3em;
-  border: 1.5px solid var(--ink);
-  padding: 16px 10px;
-  background: var(--paper);
-}
-
-.footer__cta {
-  padding: 20px clamp(18px, 4vw, 32px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-}
-
-.footer__cta h2 {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 1.7rem;
-  margin: 0;
-}
-
-.footer__cta p {
-  margin: 0 0 6px;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-.btn {
-  align-self: flex-start;
-  background: var(--ink);
-  color: var(--paper);
-  text-decoration: none;
-  padding: 12px 22px;
-  font-size: 0.85rem;
-  letter-spacing: 0.03em;
-  border: 1.5px solid var(--ink);
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.btn:hover {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-/* ================================================
-   RESPONSIVO / MOBILE
-   ================================================ */
-@media (max-width: 760px) {
-  .hero {
-    grid-template-columns: 1fr;
+  function thumbUrl(id) {
+    return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   }
 
-  .hero__image {
-    min-height: 240px;
+  // Cria as bolinhas de navegação
+  VIDEOS.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.classList.add('carousel__dot');
+    dot.setAttribute('aria-label', `Ir para o vídeo ${index + 1}`);
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = Array.from(dotsContainer.querySelectorAll('.carousel__dot'));
+
+  function render(animate = true) {
+    const current = VIDEOS[currentIndex];
+    const prev = VIDEOS[(currentIndex - 1 + VIDEOS.length) % VIDEOS.length];
+    const next = VIDEOS[(currentIndex + 1) % VIDEOS.length];
+
+    // Restaura a thumbnail (caso um vídeo estivesse tocando)
+    videoBox.innerHTML = `
+      <img class="carousel__thumb" src="${thumbUrl(current.id)}" alt="${current.title}">
+      <button class="carousel__play" aria-label="Reproduzir vídeo">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7Z"/></svg>
+      </button>
+    `;
+    videoBox.querySelector('.carousel__play').addEventListener('click', playCurrentVideo);
+
+    peekPrev.style.backgroundImage = `url('${thumbUrl(prev.id)}')`;
+    peekNext.style.backgroundImage = `url('${thumbUrl(next.id)}')`;
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === currentIndex);
+    });
+
+    // Mostra as views se já tiverem sido carregadas
+    const views = viewCounts[current.id];
+    viewsLabel.textContent = views !== undefined ? formatViews(views) : '';
+
+    if (animate) {
+      // Reinicia a animação de "giro" a cada troca de vídeo
+      videoBox.classList.remove('is-changing');
+      // Força o navegador a "esquecer" a animação anterior antes de reaplicar
+      void videoBox.offsetWidth;
+      videoBox.classList.add('is-changing');
+    }
   }
 
-  .pricing__layout,
-  .footer {
-    grid-template-columns: 1fr;
+  function playCurrentVideo() {
+    const current = VIDEOS[currentIndex];
+    videoBox.innerHTML = `
+      <iframe
+        src="https://www.youtube.com/embed/${current.id}?autoplay=1"
+        title="${current.title}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    `;
   }
 
-  .pricing__row {
-    grid-template-columns: 1fr;
-    gap: 6px;
+  function goToSlide(index) {
+    currentIndex = index;
+    render();
   }
 
-  .pricing__row--head {
-    display: none;
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % VIDEOS.length;
+    render();
   }
 
-  .pricing__price::before {
-    content: "Price: ";
-    color: var(--ink-faint);
-    font-size: 0.7rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav__links {
-    gap: 16px;
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + VIDEOS.length) % VIDEOS.length;
+    render();
   }
 
-  .hero__title {
-    font-size: 3rem;
-  }
-}
+  nextArrow.addEventListener('click', nextSlide);
+  prevArrow.addEventListener('click', prevSlide);
+  peekPrev.addEventListener('click', prevSlide);
+  peekNext.addEventListener('click', nextSlide);
+
+  render(false); // primeira renderização, sem animação
+
+  // Busca as views em segundo plano e atualiza o texto quando chegar
+  fetchViewCounts().then(() => render(false));
+});
